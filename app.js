@@ -21,13 +21,19 @@ connectToDb((err) => {
 
 // routes
 app.get("/books", async (req, res) => {
+  const page = req.query.page || 0;
+  const booksPerPage = 3;
+
   let books = [];
+
   try {
     // mongodb's default batch size is 101 documents
     await db
       .collection("books")
       .find()
       .sort({ author: 1 })
+      .skip(page * booksPerPage)
+      .limit(booksPerPage)
       .forEach((book) => books.push(book)); // returns a cursor (a pointer to the documents). need to specify toArray or forEach
     res.status(200).json(books);
   } catch (error) {
