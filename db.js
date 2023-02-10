@@ -1,7 +1,11 @@
 const { MongoClient } = require("mongodb");
 
 let dbConnection;
-const client = new MongoClient("mongodb://localhost:27017/bookstore");
+
+const uriLocal = "mongodb://localhost:27017/bookstore";
+const uriAtlas =
+  "mongodb+srv://yoshi:test123@cluster0.tvnuyyw.mongodb.net/?retryWrites=true&w=majority";
+const client = new MongoClient(uriAtlas);
 
 const connectToDb = async (cb) => {
   try {
